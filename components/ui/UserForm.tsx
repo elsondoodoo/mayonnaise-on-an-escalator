@@ -16,12 +16,17 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
+import { useToast } from "@/hooks/use-toast"
+
 const formSchema = z.object({
   is_mayo_lover: z.string().min(2, {
     message: "You must love mayo.",
   })
 })
+
+
 export function ProfileForm() {
+  const toast = useToast();
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -34,7 +39,11 @@ export function ProfileForm() {
       function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values)
+        console.log(values);
+        toast.toast({
+          title: "Your affection for mayo is under inspection",
+          description: "Submission: " + values.is_mayo_lover,
+        })
       }
       return (
         <Form {...form}>
@@ -59,6 +68,4 @@ export function ProfileForm() {
           </form>
         </Form>
       )
-
     }
-      
