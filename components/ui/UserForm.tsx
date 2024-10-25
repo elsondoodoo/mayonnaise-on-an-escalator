@@ -19,9 +19,13 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 
 const formSchema = z.object({
-  is_mayo_lover: z.string().min(2, {
-    message: "You must love mayo.",
-  })
+  is_mayo_lover: z
+    .string({
+      required_error: "Please express ur love for mayo.",
+    })
+    .refine((value) => ["YASSS!", "yesss!", "yes"].includes(value), {
+      message: "WTF! U don't like mayo??!!",
+    }),
 })
 
 
